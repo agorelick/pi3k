@@ -1,0 +1,14 @@
+Alignment Parameters	
+Gap penalties	"-11,-1"
+End-Gap penalties	"-5,-1"
+	
+CDD Parameters	
+Use RPS BLAST	on
+Blast E-value	0.003
+Find Conserved columns and Recompute	on
+	
+Query Clustering Parameters	
+Use query clusters	on
+Word Size	4
+Max cluster distance	0.8
+Alphabet	Regular
