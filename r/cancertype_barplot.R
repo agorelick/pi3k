@@ -50,6 +50,7 @@ d <- merge(d, info, by.x='Tumor_Sample_Barcode', by.y='SAMPLE_ID', all.x=T)
 hs <- fread(here('data/output.PIK3CD.txt'))
 hotspots <- sort(unique(as.integer(hs$Amino_Acid_Position[hs$qvalue < 0.1])))
 d$hotspot <- d$Amino_Acid_Position %in% hotspots
+write.tsv(d,here('data/mutation_data_for_barplot.txt'))
 summarize_cancertype <- function(d) {
     samples_mutated <- length(unique(d$Tumor_Sample_Barcode))
     samples_hotspot <- length(unique(d$Tumor_Sample_Barcode[d$hotspot==T]))
