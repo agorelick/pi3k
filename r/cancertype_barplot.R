@@ -3,7 +3,7 @@
 ## 2020-05-25
 
 
-library(here); library(data.table); library(ggplot2); library(ggrepel); library(magrittr)
+library(here); library(data.table); library(ggplot2); library(ggrepel); library(magrittr); library(gUtils)
 
 
 ## define helper function
@@ -18,7 +18,7 @@ valid_samples <- grep('P-00',supermaf_samples$Tumor_Sample_Barcode,value=T)
 
 
 ## subset clinical data for valid patients
-info <- fread(here('data/data_clinical_sample_20200119.txt'),skip=4,select=c('SAMPLE_ID','PATIENT_ID','CANCER_TYPE','CANCER_TYPE_DETAILED','MSI_SCORE','GENE_PANEL'))
+info <- fread(here('data/data_clinical_sample_20200119.txt.gz'),skip=4,select=c('SAMPLE_ID','PATIENT_ID','CANCER_TYPE','CANCER_TYPE_DETAILED','MSI_SCORE','GENE_PANEL'))
 info <- info[PATIENT_ID %in% valid_samples,]
 
 
@@ -37,7 +37,7 @@ tbl <- table.freq(info$CANCER_TYPE_LABEL)
 
 
 ## load mutation data, subset for the retained samples
-d <- fread(here('data/data_mutation_extended_20200119.txt')) 
+d <- fread(here('data/data_mutation_extended_20200119.txt.gz')) 
 d <- d[,c('Tumor_Sample_Barcode','Hugo_Symbol','Variant_Classification','Variant_Type','HGVSp_Short'),with=F]
 d <- d[Tumor_Sample_Barcode %in% info$SAMPLE_ID,]
 d <- d[Hugo_Symbol=='PIK3CD',]
