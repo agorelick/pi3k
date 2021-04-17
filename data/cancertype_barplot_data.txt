@@ -1,0 +1,32 @@
+type	samples_overall	samples_mutated	samples_hotspot
+Appendiceal Cancer	202	2	0
+Bladder Cancer	1006	11	0
+Bone Cancer	298	0	0
+Breast Cancer	5110	35	0
+CNS Cancer	100	0	0
+Cervical Cancer	208	1	0
+Colorectal Cancer	2875	31	1
+Endometrial Cancer	1121	19	1
+Esophagogastric Cancer	928	7	0
+Gastrointestinal Neuroendocrine Tumor	120	0	0
+Gastrointestinal Stromal Tumor	425	0	0
+Germ Cell Tumor	438	11	8
+Glioma	1575	21	0
+Head and Neck Cancer	467	5	0
+Hepatobiliary Cancer	912	3	0
+Melanoma	1189	19	4
+Mesothelioma	260	0	0
+Non-Small Cell Lung Cancer	5240	42	0
+Other	1853	22	0
+Ovarian Cancer	1090	5	0
+Pancreatic Cancer	1829	3	0
+Peripheral Nervous System	193	3	0
+Prostate Cancer	2052	4	0
+Renal Cell Carcinoma	702	3	0
+Salivary Gland Cancer	268	2	0
+Skin Cancer, Non-Melanoma	258	9	0
+Small Bowel Cancer	97	0	0
+Small Cell Lung Cancer	285	1	0
+Soft Tissue Sarcoma	1034	9	0
+Thyroid Cancer	571	1	0
+Uterine Sarcoma	210	0	0
