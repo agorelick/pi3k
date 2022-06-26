@@ -32,7 +32,6 @@ al[grepl('-NA',pik3cd_tm),pik3cd_tm:='']
 al[grepl('-NA',pik3ca_tm),pik3ca_tm:='']
 al$i <- 1:nrow(al)
 
-
 ## annotate the alignment data with BLOSUM similarity
 b <- fread(here('data/BLOSUM62.txt'))
 b <- adt(melt(b))
@@ -45,6 +44,56 @@ setnames(al,'score','DD_score')
 al[,aa2:=NULL]
 al <- al[order(i,decreasing=F),]
 
+alleles <- c('R38C','R88C','G124D','N334K','A414V','C416R','E525K','R636Q','L806M','A835T','R894Q','G971E','E1021K','L1023R','E1025G')
+d <- data.table(allele=alleles)
+d$Reference_Amino_Acid <- substr(d$allele,1,1)
+d$Amino_Acid_Position <- as.integer(substr(d$allele,2,(nchar(d$allele)-1)))
+d$Variant_Amino_Acid <- substr(d$allele,nchar(d$allele),nchar(d$allele))
+d$tm <- paste('PIK3CD',d$allele)
+d <- d[order(Amino_Acid_Position),]
+al <- merge(al, d[,c('Amino_Acid_Position','allele'),with=F], by.x='pik3cd_pos', by.y='Amino_Acid_Position', all.x=T)
+al <- al[order(i),]
+al$AD_score_imputed <- al$AD_score
+
+## impute gaps with the gap opening score = -11
+#al[is.na(AD_score_imputed), AD_score_imputed:=0]
+k <- 10
+i <- 1
+n <- nrow(al)
+al$sma <- as.numeric(NA)
+for(i in 1:n) {
+    vals <- (i-k):(i+k)
+    vals <- vals[vals > 0 & vals < n]
+    al$sma[i] <- mean(al$AD_score_imputed[vals],na.rm=T)
+    }
+
+library(ggrepel)
+hs <- fread('data/aligned_residue_enrichment.txt')
+al$aligned_hotspot <- (
+                       al$pik3ca_tm %in% hs$pik3ca_residue[hs$aligned_hotspot==T] | 
+                       al$pik3cd_tm %in% hs$pik3cd_residue[hs$aligned_hotspot==T] )
+
+tmp <- al[!is.na(AD_score)] ## exclude gaps
+
+library(ggplot2)
+p <- ggplot(tmp, aes(x=aligned_hotspot, y=sma)) +
+    geom_point(position=position_jitter(width=0.15,height=0)) +
+    #geom_text_repel(aes(label=label)) +
+    geom_boxplot(fill=NA)
+
+x <- hs$AD_score[hs$aligned_hotspot==T]
+y <- hs$AD_score[hs$aligned_hotspot==F]
+wilcox.test(x,y)
+
+
+al$notNA <- (!is.na(al$AD_score)) + 0
+al$group <- cumsum(c(0,diff(al$notNA) != 0)) + 1
+al <- al[!is.na(AD_score)]
+al$group <- as.integer(factor(al$group, levels=unique(al$group)))
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# plots of alignment at important residues
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## specify the tested mutations to include in the plot (with a window of +/-15aa around each)
 alleles <- c('R38C','R88C','G124D','N334K','A414V','C416R','E525K','R636Q','L806M','A835T','R894Q','G971E','E1021K','L1023R','E1025G')

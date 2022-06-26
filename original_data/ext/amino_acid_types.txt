@@ -1,0 +1,21 @@
+#https://www.sigmaaldrich.com/US/en/technical-documents/technical-article/protein-biology/protein-structural-analysis/amino-acid-reference-chart	amino_acid	side_chain
+1	A	Hydrophobic (aliphatic)
+2	I	Hydrophobic (aliphatic)
+3	L	Hydrophobic (aliphatic)
+4	M	Hydrophobic (aliphatic)
+5	V	Hydrophobic (aliphatic)
+6	F	Hydrophobic (aromatic)
+7	W	Hydrophobic (aromatic)
+8	Y	Hydrophobic (aromatic)
+9	N	Polar (neutral)
+10	C	Polar (neutral)
+11	Q	Polar (neutral)
+12	S	Polar (neutral)
+13	T	Polar (neutral)
+14	D	Charged (acidic)
+15	E	Charged (acidic)
+16	R	Charged (basic)
+17	H	Charged (basic)
+18	K	Charged (basic)
+19	G	Other
+20	P	Other
